@@ -1,0 +1,31 @@
+#!/bin/bash
+#check if git is installed
+$(hash git) &>/dev/null
+if [[ $? != 0 ]];then
+printf "\033[31mGit is not installed.Please install to continue\033[0m\n"
+exit
+#else
+#printf "\033[32mAll dependencies are satisfied\033[0m\n"
+fi;
+
+while [[ $# >0 ]] ;do
+if [[ -d $1 ]];then
+cd $1
+echo -e "\033[32mPulling repo for $1\033[0m"
+git pull
+elif [[ $1 = "-h" ]];then
+echo "Usage:"
+echo -e "\tautopull [options] adress[es]"
+echo -e "options:"
+echo -e "\t-h\t\tshow this help text"
+echo -e "usage:"
+echo -e "\t\033[43;30mautopull /adres/to/folder /another/adres/to/another/folder ... /nth adres\033[0m"
+echo -e "\033[1mAuthor:\033[0m"
+echo -e "\tNikos Efthias"
+echo -e "\tnikos.efthias@gmail.com"
+exit
+else
+echo -e "\033[31mNo such file:\033[0m$1"
+fi
+shift
+done
